@@ -1,4 +1,6 @@
-﻿namespace AppFotos.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppFotos.Models
 {
 
     /// <summary>
@@ -9,6 +11,7 @@
         /// <summary>
         /// Id do utilizador
         /// </summary>
+        [Key]
         
         public int id { get; set; }
         /// <summary>

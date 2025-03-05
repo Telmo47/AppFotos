@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppFotos.Models
 {
@@ -12,7 +13,7 @@ namespace AppFotos.Models
         /// <summary>
         /// Identificados de Fotografia
         /// </summary>
-        
+        [Key] 
         public int id { get; set; }
 
         /// <summary>

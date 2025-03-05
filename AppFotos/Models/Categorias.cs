@@ -1,4 +1,6 @@
-﻿namespace AppFotos.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AppFotos.Models
 {
 
     /// <summary>
@@ -9,7 +11,7 @@
         /// <summary>
         /// Identificador das categorias
         /// </summary>
-        
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
