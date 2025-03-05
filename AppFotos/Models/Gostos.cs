@@ -1,4 +1,6 @@
-﻿namespace AppFotos.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppFotos.Models
 {
 
     /// <summary>
@@ -13,6 +15,34 @@
         public DateTime Data { get; set; }
 
 
+        /* *******************************
+       * Definição dos Relacionamentos *
+       * *******************************
+       */
+
+
+        //Relacionamentos 1 - N
+
+
+        /// <summary>
+        /// Referência o Utilizador
+        /// </summary>
+
+        [ForeignKey(nameof(Utilizador))]
+        public int UtilizadorFK { get; set; }
+
+        /// <summary>
+        /// FK para referenciar o que o utlizador gosta da Fotografia
+        /// </summary>
+        public Utilizadores Utilizador { get; set; }
+
+        /// <summary>
+        /// FK para a fotografia que o utilizador gostou
+        /// </summary>
+
+        [ForeignKey(nameof(Fotografia))]
+        public int FotografiaFK { get; set; }
+        public Fotografias Fotografia { get; set; }
 
 
     }

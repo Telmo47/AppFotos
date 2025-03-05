@@ -1,4 +1,6 @@
-﻿namespace AppFotos.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AppFotos.Models
 {
 
     /// <summary>
@@ -10,6 +12,7 @@
         /// <summary>
         /// Identificador da compra
         /// </summary>
+        
 
         public int Id { get; set; }
 
@@ -38,7 +41,34 @@
             Terminada
         }
 
+
+        /* *******************************
+         * Definição dos Relacionamentos *
+         * *******************************
+         */
+
+
+        //Relacionamentos 1 - N
+
+
+        /// <summary>
+        /// Referência o Comprador da fotografia
+        /// </summary>
+
+        [ForeignKey(nameof(Comprador))]
+        public int CompradorFK { get; set; }
+
+        /// <summary>
+        /// FK para referenciar o Comprador da Fotografia
+        /// </summary>
+        public Utilizadores Comprador { get; set; }
+
+        /// <summary>
+        /// FK para as fotografias compradas pelo utilizador
+        /// </summary>
+        public ICollection<Fotografias> ListaFotografiasCompradas { get; set; }
     }
+}
 
 
 

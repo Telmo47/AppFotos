@@ -9,11 +9,20 @@
         /// <summary>
         /// Identificador das categorias
         /// </summary>
+        
         public int Id { get; set; }
 
         /// <summary>
         /// Nome da categoria que será associada às fotografias
         /// </summary>
         public string Categoria { get; set; }
+
+
+        /* *******************************
+       * Definição dos Relacionamentos *
+       * *******************************
+       */
+
+        public ICollection<Fotografias> ListaFotografias { get; set; }
     }
 }

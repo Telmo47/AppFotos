@@ -9,6 +9,7 @@
         /// <summary>
         /// Id do utilizador
         /// </summary>
+        
         public int id { get; set; }
         /// <summary>
         /// Nome do utilizador
@@ -36,8 +37,24 @@
         public string Telemovel { get; set; }
 
 
+        /* *******************************
+       * Definição dos Relacionamentos *
+       * *******************************
+       */
 
+        /// <summary>
+        /// Lista das Fotografias que são propriedade do utilizador
+        /// </summary>
+        public ICollection<Fotografias> ListaFotos { get; set; }
 
+        /// <summary>
+        /// Lista dos gostos das fotografias do utilizador
+        /// </summary>
+        public ICollection<Gostos> ListaGostos { get; set; }
 
+        /// <summary>
+        /// Lista das fotografias compradas pelo utilizador
+        /// </summary>
+        public ICollection<Compras> ListaCompras { get; set; }
     }
 }
