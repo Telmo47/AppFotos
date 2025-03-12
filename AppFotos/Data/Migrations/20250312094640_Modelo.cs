@@ -115,7 +115,7 @@ namespace AppFotos.Data.Migrations
                         column: x => x.ListaFotografiasCompradasid,
                         principalTable: "Fotografias",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,7 +140,7 @@ namespace AppFotos.Data.Migrations
                         column: x => x.UtilizadorFK,
                         principalTable: "Utilizadores",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
