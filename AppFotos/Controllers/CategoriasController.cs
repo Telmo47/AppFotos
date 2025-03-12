@@ -12,17 +12,22 @@ namespace AppFotos.Controllers
 {
     public class CategoriasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+
+        /// <summary>
+        /// Referência a Bases de Dados
+        /// </summary>
+        
+        private readonly ApplicationDbContext bd;
 
         public CategoriasController(ApplicationDbContext context)
         {
-            _context = context;
+            bd = context;
         }
 
         // GET: Categorias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categorias.ToListAsync());
+            return View(await bd.Categorias.ToListAsync());
         }
 
         // GET: Categorias/Details/5
@@ -33,7 +38,7 @@ namespace AppFotos.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias
+            var categorias = await bd.Categorias
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (categorias == null)
             {
@@ -46,23 +51,36 @@ namespace AppFotos.Controllers
         // GET: Categorias/Create
         public IActionResult Create()
         {
-            return View();
+            return View(); // mostra a View de nome 'Create', que está na pasta que está na pasta 'Categorias'
         }
 
         // POST: Categorias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Categoria")] Categorias categorias)
+        [HttpPost] // Responde a uma resposta de browser feita em POST
+        [ValidateAntiForgeryToken] //Proteção contra ataques
+        public async Task<IActionResult> Create([Bind("Categoria")] Categorias novaCategoria)
         {
+            //Tarefas
+            // - ajustar o nome das variáveis
+            // - ajustar os anotadores, neste caso concreto, eliminar ID do 'Bind'
+
             if (ModelState.IsValid)
             {
-                _context.Add(categorias);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    bd.Add(novaCategoria);
+                    await bd.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    // throw;
+                    ModelState.AddModelError("", "Aconteceu um erro na gravação de dados.");
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
-            return View(categorias);
+            return View(novaCategoria);
         }
 
         // GET: Categorias/Edit/5
@@ -73,7 +91,7 @@ namespace AppFotos.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias.FindAsync(id);
+            var categorias = await bd.Categorias.FindAsync(id);
             if (categorias == null)
             {
                 return NotFound();
@@ -86,9 +104,9 @@ namespace AppFotos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Categoria")] Categorias categorias)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Categoria")] Categorias categoriaAlterada)
         {
-            if (id != categorias.Id)
+            if (id != categoriaAlterada.Id)
             {
                 return NotFound();
             }
@@ -97,12 +115,12 @@ namespace AppFotos.Controllers
             {
                 try
                 {
-                    _context.Update(categorias);
-                    await _context.SaveChangesAsync();
+                    bd.Update(categoriaAlterada);
+                    await bd.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoriasExists(categorias.Id))
+                    if (!CategoriasExists(categoriaAlterada.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +131,7 @@ namespace AppFotos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(categorias);
+            return View(categoriaAlterada);
         }
 
         // GET: Categorias/Delete/5
@@ -124,7 +142,7 @@ namespace AppFotos.Controllers
                 return NotFound();
             }
 
-            var categorias = await _context.Categorias
+            var categorias = await bd.Categorias
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (categorias == null)
             {
@@ -139,19 +157,19 @@ namespace AppFotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var categorias = await _context.Categorias.FindAsync(id);
+            var categorias = await bd.Categorias.FindAsync(id);
             if (categorias != null)
             {
-                _context.Categorias.Remove(categorias);
+                bd.Categorias.Remove(categorias);
             }
 
-            await _context.SaveChangesAsync();
+            await bd.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoriasExists(int id)
         {
-            return _context.Categorias.Any(e => e.Id == id);
+            return bd.Categorias.Any(e => e.Id == id);
         }
     }
 }
