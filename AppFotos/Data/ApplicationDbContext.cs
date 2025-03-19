@@ -9,7 +9,7 @@ namespace AppFotos.Data;
 /// Esta classe representa a Base de Dados associada ao projeto
 /// Se houver mais bases de dados, irão haver tantas classes deste tipo quanto necessárias
 /// 
-/// esta classe é equivalente a: CREATE SCHEMA  ou CREATE DATABSE no SQL
+/// esta classe é equivalente a: CREATE SCHEMA  ou CREATE DATABASE no SQL
 /// </summary>
 public class ApplicationDbContext : IdentityDbContext
 {
