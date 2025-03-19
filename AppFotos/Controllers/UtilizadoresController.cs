@@ -66,7 +66,10 @@ namespace AppFotos.Controllers
             if (ModelState.IsValid)
             {
                 //Corrigir os dados do código postal
+                utilizador.CodPostal = utilizador.CodPostal.ToUpper();
+
                 _context.Add(utilizador);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -105,6 +108,9 @@ namespace AppFotos.Controllers
             {
                 try
                 {
+                    //Corrigir os dados do código postal
+                    utilizador.CodPostal = utilizador.CodPostal.ToUpper();
+                       
                     _context.Update(utilizador);
                     await _context.SaveChangesAsync();
                 }
