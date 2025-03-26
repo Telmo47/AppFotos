@@ -14,7 +14,7 @@ namespace AppFotos.Models
         /// Identificados de Fotografia
         /// </summary>
         [Key] 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Título da fotografia
@@ -36,6 +36,10 @@ namespace AppFotos.Models
         /// <summary>
         /// Data em que a fotografia foi tirada
         /// </summary>
+        [Display(Name ="Data")]
+        [DataType(DataType.Date)] // Transforma o atributo, na BD, em 'Date'
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage ="A {0} é de preenchimento obrigatório")]
 
         public DateTime Data { get; set; }
 

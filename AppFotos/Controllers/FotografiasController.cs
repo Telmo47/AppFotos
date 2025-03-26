@@ -51,7 +51,7 @@ namespace AppFotos.Controllers
             var fotografia = await _context.Fotografias
                 .Include(f => f.Categoria)
                 .Include(f => f.Dono)
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (fotografia == null)
             {
                 return NotFound();
@@ -111,7 +111,7 @@ namespace AppFotos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,Ficheiro,Data,Preco,CategoriaFK,DonoFK")] Fotografias fotografia)
         {
-            if (id != fotografia.id)
+            if (id != fotografia.Id)
             {
                 return NotFound();
             }
@@ -125,7 +125,7 @@ namespace AppFotos.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FotografiasExists(fotografia.id))
+                    if (!FotografiasExists(fotografia.Id))
                     {
                         return NotFound();
                     }
@@ -152,7 +152,7 @@ namespace AppFotos.Controllers
             var fotografia = await _context.Fotografias
                 .Include(f => f.Categoria)
                 .Include(f => f.Dono)
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (fotografia == null)
             {
                 return NotFound();
@@ -178,7 +178,7 @@ namespace AppFotos.Controllers
 
         private bool FotografiasExists(int id)
         {
-            return _context.Fotografias.Any(e => e.id == id);
+            return _context.Fotografias.Any(e => e.Id == id);
         }
     }
 }
