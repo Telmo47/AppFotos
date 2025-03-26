@@ -12,6 +12,7 @@ namespace AppFotos.Controllers
 {
     public class FotografiasController : Controller
     {
+
         private readonly ApplicationDbContext _context;
 
         public FotografiasController(ApplicationDbContext context)
@@ -22,14 +23,14 @@ namespace AppFotos.Controllers
         // GET: Fotografias
         public async Task<IActionResult> Index()
         {
-            /*Interrogação à BD feita em LINQ <=> SQL
-             * SELECT * 
-             * FROM Fotografias f INNER JOIN Categorias c ON f.CategoriaFK = C.Id
+
+            /* interrogação à BD feita em LINQ <=> SQL
+             * SELECT *
+             * FROM Fotografias f INNER JOIN Categorias c ON f.CategoriaFK = c.Id
              *                    INNER JOIN Utilizadores u ON f.DonoFK = u.Id
              */
-
-            //l pequeno em listaFotografias porque a variavel é local
             var listaFotografias = _context.Fotografias.Include(f => f.Categoria).Include(f => f.Dono);
+
             return View(await listaFotografias.ToListAsync());
         }
 
@@ -41,13 +42,12 @@ namespace AppFotos.Controllers
                 return NotFound();
             }
 
-            /*Interrogação à BD feita em LINQ <=> SQL
-             * SELECT * 
-             * FROM Fotografias f INNER JOIN Categorias c ON f.CategoriaFK = C.Id
+            /* interrogação à BD feita em LINQ <=> SQL
+             * SELECT *
+             * FROM Fotografias f INNER JOIN Categorias c ON f.CategoriaFK = c.Id
              *                    INNER JOIN Utilizadores u ON f.DonoFK = u.Id
              * WHERE f.Id = id
              */
-
             var fotografia = await _context.Fotografias
                 .Include(f => f.Categoria)
                 .Include(f => f.Dono)
@@ -63,8 +63,8 @@ namespace AppFotos.Controllers
         // GET: Fotografias/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Id");
-            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "id", "id");
+            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Categoria");
+            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "Id", "Id");
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace AppFotos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Titulo,Descricao,Ficheiro,Data,Preco,CategoriaFK,DonoFK")] Fotografias fotografia)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Descricao,Ficheiro,Data,Preco,CategoriaFK,DonoFK")] Fotografias fotografia)
         {
             if (ModelState.IsValid)
             {
@@ -81,8 +81,8 @@ namespace AppFotos.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Id", fotografia.CategoriaFK);
-            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "id", "id", fotografia.DonoFK);
+            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Categoria", fotografia.CategoriaFK);
+            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "Id", "Id", fotografia.DonoFK);
             return View(fotografia);
         }
 
@@ -99,8 +99,8 @@ namespace AppFotos.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Id", fotografia.CategoriaFK);
-            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "id", "id", fotografia.DonoFK);
+            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Categoria", fotografia.CategoriaFK);
+            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "Id", "Id", fotografia.DonoFK);
             return View(fotografia);
         }
 
@@ -109,7 +109,7 @@ namespace AppFotos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,Titulo,Descricao,Ficheiro,Data,Preco,CategoriaFK,DonoFK")] Fotografias fotografia)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Descricao,Ficheiro,Data,Preco,CategoriaFK,DonoFK")] Fotografias fotografia)
         {
             if (id != fotografia.id)
             {
@@ -136,8 +136,8 @@ namespace AppFotos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Id", fotografia.CategoriaFK);
-            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "id", "id", fotografia.DonoFK);
+            ViewData["CategoriaFK"] = new SelectList(_context.Categorias, "Id", "Categoria", fotografia.CategoriaFK);
+            ViewData["DonoFK"] = new SelectList(_context.Utilizadores, "Id", "Id", fotografia.DonoFK);
             return View(fotografia);
         }
 
