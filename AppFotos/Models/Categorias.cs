@@ -17,6 +17,9 @@ namespace AppFotos.Models
         /// <summary>
         /// Nome da categoria que será associada às fotografias
         /// </summary>
+        [Required(ErrorMessage ="A {0} é de preenchimento obrigatório")] //Obrigatoriedade de preencher e a mensagem de erro
+        [StringLength(20)] // Os caracteres de prenchimento limite
+        [Display(Name ="Categoria")]
         public string Categoria { get; set; }
 
 
