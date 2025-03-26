@@ -13,7 +13,7 @@ namespace AppFotos.Models
         /// <summary>
         /// Identificados de Fotografia
         /// </summary>
-        [Key] 
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -36,18 +36,31 @@ namespace AppFotos.Models
         /// <summary>
         /// Data em que a fotografia foi tirada
         /// </summary>
-        [Display(Name ="Data")]
+        [Display(Name = "Data")]
         [DataType(DataType.Date)] // Transforma o atributo, na BD, em 'Date'
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required(ErrorMessage ="A {0} é de preenchimento obrigatório")]
+        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
 
         public DateTime Data { get; set; }
 
         /// <summary>
         /// Preço de venda da fotografia
         /// </summary>
+        [Display(Name = "Preço")]
 
         public decimal Preco { get; set; }
+
+
+        /// <summary>
+        /// atributo auxiliar para recolher o valor de Preço da fotografia
+        /// será usado no 'create' e no 'edit'
+        /// </summary>
+        [NotMapped] // este atributo não será replicado na BD
+        [Display(Name = "Preço")]
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [StringLength(10)]
+        [RegularExpression("[0 - 9]{1, 7} ([.,][0 - 9]{1,2})?", ErrorMessage ="Pode escrever suas casas decimais separadas por . ou ,")]
+        public string PrecoAux { get; set; }
 
 
 
@@ -64,6 +77,7 @@ namespace AppFotos.Models
         /// </summary>
 
         [ForeignKey(nameof(Categoria))]
+        [Display(Name = "Categoria")]
          public int CategoriaFK { get; set; }
         /// <summary>
         /// FK para categorias
@@ -75,6 +89,7 @@ namespace AppFotos.Models
         /// </summary>
 
         [ForeignKey(nameof(Dono))]
+        [Display(Name = "Dono")]
         public int DonoFK { get; set; }
 
         /// <summary>
